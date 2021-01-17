@@ -33,21 +33,29 @@ def removeTimesPassed(items):
 
     return items
 
+def formatState(time, day):
+    h = str(time)
+    if time < 10:
+        h = "0" + h
+
+    return h +' '+ day
+
 today    = minSum(today,len(today), 'today')
 today    = removeTimesPassed(today)
+
 if (tomorrow):
     tomorrow = minSum(tomorrow,len(tomorrow), 'tomorrow')
-    subsets  = today + tomorrow
+    tomorrow = sorted(tomorrow, key=lambda k: k.get('sum', 0))
+    state3   = formatState(tomorrow[0]['hour'], tomorrow[0]['day'])
+    hass.states.set(tomorrow_target, state3, tomorrow[0])
 
-    state     = sorted(tomorrow, key=lambda k: k.get('sum', 0))
-    state3    = str(tomorrow[0]['hour']) +' '+ tomorrow[0]['day']
-    hass.states.set(tomorrow_target, state3, subsets[0])
+    subsets  = today + tomorrow
 else:
     subsets  = today
 subsets  = sorted(subsets, key=lambda k: k.get('sum', 0))
-state    = str(subsets[0]['hour']) +' '+ subsets[0]['day']
+state    = formatState(subsets[0]['hour'], subsets[0]['day'])
 hass.states.set(target, state, subsets[0])
 
 subsets  = sorted(today, key=lambda k: k.get('sum', 0))
-state2    = str(subsets[0]['hour']) +' '+ subsets[0]['day']
+state2    = formatState(subsets[0]['hour'], subsets[0]['day'])
 hass.states.set(today_target, state2, subsets[0])
