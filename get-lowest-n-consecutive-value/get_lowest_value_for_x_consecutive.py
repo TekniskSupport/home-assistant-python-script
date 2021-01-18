@@ -14,9 +14,9 @@ tomorrow  = prices.as_dict()['attributes'][tomorrow]
 def minSum(arr, n, d):
     subset = []
     for (k) in range(n):
-        if k+hours < n:
+        if k+hours <= n:
           addTogether = []
-          for i in range(k,k+hours):
+          for i in range(k,k+hours-1):
             addTogether.append(arr[i])
           value = sum(addTogether)
           subset.append({'hour': k, 'sum': value, 'day': d})
