@@ -38,7 +38,7 @@ def formatState(time, day):
     if time < 10:
         h = "0" + h
 
-    return h +' '+ day
+    return h +':00 '+ day
 
 today    = minSum(today,len(today), 'today')
 today    = removeTimesPassed(today)
